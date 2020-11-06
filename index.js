@@ -85,7 +85,8 @@ function addSongFromUrl() {
         output.style.marginRight = "16px";
         output.style.marginBottom = "16px";
         output.style.padding = "16px";
-        output.style.backgroundColor = "#303030"
+        output.style.backgroundColor = "#303030";
+        output.style.overflowWrap = "break-word";
         output.innerHTML = ("/oa show add " + showName + " " + timestamp + " command oa region temp " + regionName + " " + url + " " + duration)                  // Insert text
         document.body.appendChild(output);       
         

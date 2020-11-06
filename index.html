@@ -23,14 +23,15 @@
         <input id="regionNameInput" type="text">-->
     <div id="main-container">
         <div id="header">
-            <h2 style="margin-top: 0px;">OpenAudioMc Show Editor</h2>
+            <h2 style="margin-top: 0px; margin-right: 16px;">OpenAudioMc Show Editor</h2>
             <button id="addSongButton">Add Song</button>
         </div>
         <div id="dataHeader">
-            <p>Show Name:</p>
-            <input class="dataHeaderInput" id="showNameInput" type="text" style="flex: 1;">
-            <p>Region Name:</p>
-            <input class="dataHeaderInput" id="regionNameInput" type="text" style="flex: 2;">
+            <label class="dataHeaderLabel">Show Name:</label>
+            <input class="dataHeaderInput" id="showNameInput" type="text">
+            <br id="hiddenLineBreak">
+            <label class="dataHeaderLabel">Region Name:</label>
+            <input class="dataHeaderInput" id="regionNameInput" type="text">
         </div>
         <!-- The Modal -->
         <div id="myModal" class="modal">
@@ -39,7 +40,7 @@
                 <span class="close">&times;</span>
                 <div id="addSongForm">
                     <h3>Add a song</h3>
-                    <label for="songUrlInput">Song Url</label>
+                    <label id="songUrlLabel">Song Url:</label>
 
                     <input id="songUrlInput" type="url" required onfocus="this.value=''">
 
