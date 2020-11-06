@@ -1,4 +1,4 @@
-var setDuration = 0;
+/*var setDuration = 0;
 
 window.onload=function(){
 
@@ -36,61 +36,60 @@ window.onload=function(){
                     
 
     }, false); 
-}
+}*/
 
-//var showName = document.getElementById("showNameInput").value;
-//var regionName = document.getElementById("regionNameInput").value;
-//var songUrl = document.getElementById("songUrlInput").value;
-//var trackLength = the length of the track that was pulled from url this will be auto propogated onto the site later but i cannot do it rn because im bad.
-
+var setDuration = 0;
 function addSongFromUrl() {
-    
+    document.getElementById("myModal").style.display = "none";
+
+    if ((document.getElementById("songUrlInput").value) == "") {
+        
+    } else {
         // Create a non-dom allocated Audio element
         var au = document.createElement('audio');
 
         // Define the URL of the MP3 audio file
         au.src = document.getElementById("songUrlInput").value;
+        document.getElementById("songUrlInput").innerHTML = "";
 
         // Once the metadata has been loaded, display the duration in the console
         au.addEventListener('loadedmetadata', function(){
-        // Obtain the duration in seconds of the audio file (with milliseconds as well, a float value)
-        var durationMinutes = Math.floor(au.duration / 60);
-        var durationSeconds = Math.floor(au.duration % 60);
-
-        // example 12.3234 seconds
-        document.getElementById("urlOutput").innerHTML = au.src;
-        document.getElementById("songDuration").innerHTML = (durationMinutes + ":" + durationSeconds);
-        // Alternatively, just display the integer value with
-        // parseInt(duration)
-        // 12 seconds
-        },false);
-    
-}
-
-
-
-
-function requestUserRepo() {
-    // create new XMLHttpRequest object
-    const xhr = new XMLHttpRequest();
-    var username = document.getElementById("githubUsername").value;
-    // GitHub endpoint, dynamically passing in specified username
-    const url = `https://api.github.com/users/${username}/repos`;
-
-    // Open a new connection, using a GET request via URL endpoint
-    // Providing 3 arguments (GET/POST, The URL, Async True/False)
-    xhr.open('GET', url, true);
-
-    xhr.onload = function() {
-    
-        // Parse API data into JSON
-        const data = JSON.parse(this.response);
+        // Obtain the duration in seconds of the audio file
+        var duration = Math.floor(au.duration);
         
-        // Log the response
-        console.log(data);
+        setDuration = setDuration + duration;
+        commandDuration = setDuration - duration;
+
+        //Calculate the timestamp
+        var hours   = Math.floor(commandDuration / 3600);
+        var minutes = Math.floor((commandDuration - (hours * 3600)) / 60);
+        var seconds = commandDuration - (hours * 3600) - (minutes * 60);
+
+        if (hours   < 10) {hours   = "0"+hours;}
+        if (minutes < 10) {minutes = "0"+minutes;}
+        if (seconds < 10) {seconds = "0"+seconds;}
+
+        var timestamp = (hours + ":" + minutes + ":" + seconds);
+        
+        var showName = document.getElementById("showNameInput").value;
+        var regionName = document.getElementById("regionNameInput").value;
+        if (showName == "") {showName = "(show)";}
+        if (regionName == "") {regionName = "(region)";}
+ 
+        
+        var url = au.src;
+        
+        var output = document.createElement("p");   
+        output.style.color = "white";
+        output.style.margin = "16px";
+        output.style.marginRight = "16px";
+        output.style.marginBottom = "16px";
+        output.style.padding = "16px";
+        output.style.backgroundColor = "#303030"
+        output.innerHTML = ("/oa show add " + showName + " " + timestamp + " command oa region temp " + regionName + " " + url + " " + duration)                  // Insert text
+        document.body.appendChild(output);       
+        
+        },false);
+    } 
     
-    }
-    
-    // Send the request to the server
-    xhr.send();
 }
