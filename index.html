@@ -32,6 +32,26 @@
             <br id="hiddenLineBreak">
             <label class="dataHeaderLabel">Region Name:</label>
             <input class="dataHeaderInput" id="regionNameInput" type="text">
+            <br id="hiddenLineBreak">
+            <label class="dataHeaderLabel">Now Playing Color:</label>
+            <select id="colorSelect">
+                <option value="black">Black</option>
+                <option value="dark_blue">Dark Blue</option>
+                <option value="dark_green">Dark Green</option>
+                <option value="dark_aqua">Dark Aqua</option>
+                <option value="dark_red">Dark Red</option>
+                <option value="dark_purple">Dark Purple</option>
+                <option value="gold">Gold</option>
+                <option value="gray">Gray</option>
+                <option value="dark_gray">Dark Gray</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <option value="aqua">Aqua</option>
+                <option value="red">Red</option>
+                <option value="light_purple">Light Purple</option>
+                <option value="yellow">Yellow</option>
+                <option value="white">White</option>
+            </select>
         </div>
         <!-- The Modal -->
         <div id="myModal" class="modal">
@@ -40,9 +60,17 @@
                 <span class="close">&times;</span>
                 <div id="addSongForm">
                     <h3>Add a song</h3>
-                    <label id="songUrlLabel">Song Url:</label>
+                    <label>Song Name:</label>
+                    
+                    <input class="modal-input" id="songNameInput" type="text">
 
-                    <input id="songUrlInput" type="url" required onfocus="this.value=''">
+                    <label>Artist:</label>
+                    
+                    <input class="modal-input" id="artistNameInput" type="text">
+                    
+                    <label>Song Url:</label>
+
+                    <input class="modal-input" id="songUrlInput" type="url" required onfocus="this.value=''">
 
                     <label id="disclaimerLabel" style="margin-bottom: 16px;">Supports Dropbox, Github, Google Drive, & Custom Hosting</label>
 
@@ -51,6 +79,9 @@
             </div>
         </div>
     </div>
+    <div id="commandsContainer"></div>
+    <button id="hideNowPlayingCommandsButton" onclick="toggleNowPlayingCommands();">Hide Now Playing Commands</button>
+    <div id="nowPlayingCommandsContainer"></div>
 
     <script>
         // Get the modal

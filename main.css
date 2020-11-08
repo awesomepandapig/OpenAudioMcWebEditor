@@ -57,7 +57,7 @@ input {
     padding: 16px;
 }
 
-#songUrlInput {
+.modal-input {
     margin-right: auto;
     margin-left: auto;
     display: block;
@@ -69,6 +69,7 @@ input {
     border: none;
     height: 16px;
     color: white;
+    font-family: Source Sans Pro,Open Sans,sans-serif;
 }
 
 #header {
@@ -104,6 +105,7 @@ input {
     border: none;
     border-radius: 3px;
     padding: 3px;
+    font-family: Source Sans Pro,Open Sans,sans-serif;
 }
 
 .dataHeaderLabel {
@@ -131,9 +133,6 @@ h2 {
     
 }
 
-#songUrlLabel {
-    margin-right: 16px;
-}
 
 #submitSong {
     margin-top: 16px;
@@ -159,4 +158,28 @@ h2 {
 
 #disclaimerLabel {
     font-size: 14px;
+}
+
+#hideNowPlayingCommandsButton {
+    background-color: white;
+    padding-right: 16px;
+    margin-left: 16px;
+    margin-bottom: 16px;
+    border: none;
+    padding: 10px;
+    font-family: Source Sans Pro,Open Sans,sans-serif;
+    font-style: bold;
+    font-size: 16px;
+    display: none;
+}
+
+#colorSelect {
+    padding-right: 16px;
+    margin-left: 16px;
+    height: 24px;
+    margin-top: 16px;
+    border: none;
+    border-radius: 3px;
+    padding: 3px;
+    font-family: Source Sans Pro,Open Sans,sans-serif;
 }

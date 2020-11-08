@@ -102,22 +102,55 @@ function addSongFromUrl() {
         
         var showName = document.getElementById("showNameInput").value;
         var regionName = document.getElementById("regionNameInput").value;
-        if (showName == "") {showName = "(show)";}
-        if (regionName == "") {regionName = "(region)";}
+        if (showName == "") {showName = "[Show Name Here]";}
+        if (regionName == "") {regionName = "[Region Name Here]";}
 
         
-        var output = document.createElement("p");   
-        output.style.color = "white";
-        output.style.margin = "16px";
-        output.style.marginRight = "16px";
-        output.style.marginBottom = "16px";
-        output.style.padding = "16px";
-        output.style.backgroundColor = "#303030";
-        output.style.overflowWrap = "break-word";
-        output.innerHTML = ("/oa show add " + showName + " " + timestamp + " command oa region temp " + regionName + " " + au.src + " " + duration)                  // Insert text
-        document.body.appendChild(output);       
+        var commandOutput = document.createElement("p");   
+        commandOutput.style.color = "white";
+        commandOutput.style.margin = "16px";
+        commandOutput.style.marginRight = "16px";
+        commandOutput.style.marginBottom = "16px";
+        commandOutput.style.padding = "16px";
+        commandOutput.style.backgroundColor = "#303030";
+        commandOutput.style.overflowWrap = "break-word";
+        commandOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command oa region temp " + regionName + " " + au.src + " " + duration)                  // Insert text
+        document.getElementById("commandsContainer").appendChild(commandOutput); 
         
+        //TEST
+        var songName = document.getElementById("songNameInput").value;
+        var artistName = document.getElementById("artistNameInput").value;
+        var color = document.getElementById("colorSelect").value;
+        
+        if (songName == "") {songName = "[Song Name Here]";}
+        if (artistName == "") {artistName = "[Artist Name Here]";}
+
+        var nowPlayingOutput = document.createElement("p");   
+        nowPlayingOutput.style.color = "white";
+        nowPlayingOutput.style.margin = "16px";
+        nowPlayingOutput.style.marginRight = "16px";
+        nowPlayingOutput.style.marginBottom = "16px";
+        nowPlayingOutput.style.padding = "16px";
+        nowPlayingOutput.style.backgroundColor = "#303030";
+        nowPlayingOutput.style.overflowWrap = "break-word";
+        nowPlayingOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command tellraw @a {\"text\":\"Now Playing: " + songName + " - " + artistName + "\",\"color\":\"" + color + "\"}")                  // Insert text
+        document.getElementById("nowPlayingCommandsContainer").appendChild(nowPlayingOutput);
+        document.getElementById("songNameInput").value = "";
+        document.getElementById("artistNameInput").value = "";
+        document.getElementById("songUrlInput").value = "";
+        document.getElementById("hideNowPlayingCommandsButton").style.display = "block";
         },false);
     } 
     
+}
+
+function toggleNowPlayingCommands() {
+    var commandsDiv = document.getElementById("nowPlayingCommandsContainer");
+    if (commandsDiv.style.display === "none") {
+    document.getElementById("hideNowPlayingCommandsButton").innerHTML = "Hide Now Playing Commands";
+    commandsDiv.style.display = "block";
+  } else {
+    commandsDiv.style.display = "none";
+    document.getElementById("hideNowPlayingCommandsButton").innerHTML = "Show Now Playing Commands";
+  }
 }
