@@ -74,7 +74,7 @@ function addSongFromUrl() {
 
         if (url.hostname == "drive.google.com") {
             console.log("google drive");
-            au.src = "https://www.docs.google.com//uc?authuser=0&id=" + url.pathname.split(/[/]/)[3] + "&export=download";
+            au.src = url.protocol + "docs.google.com//uc?authuser=0&id=" + url.pathname.split(/[/]/)[3] + "&export=download";
             console.log(au.src);
         }
 
@@ -105,7 +105,7 @@ function addSongFromUrl() {
         if (showName == "") {showName = "[Show Name Here]";}
         if (regionName == "") {regionName = "[Region Name Here]";}
 
-        
+        //Creates the song commands
         var commandOutput = document.createElement("p");   
         commandOutput.style.color = "white";
         commandOutput.style.margin = "16px";
@@ -117,7 +117,7 @@ function addSongFromUrl() {
         commandOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command oa region temp " + regionName + " " + au.src + " " + duration)                  // Insert text
         document.getElementById("commandsContainer").appendChild(commandOutput); 
         
-        //TEST
+        //Creates the now playing commands
         var songName = document.getElementById("songNameInput").value;
         var artistName = document.getElementById("artistNameInput").value;
         var color = document.getElementById("colorSelect").value;
