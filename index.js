@@ -74,7 +74,7 @@ function addSongFromUrl() {
 
         if (url.hostname == "drive.google.com") {
             console.log("google drive");
-            au.src = url.protocol + "docs.google.com//uc?authuser=0&id=" + url.pathname.split(/[/]/)[3] + "&export=download";
+            au.src = "https://www.docs.google.com//uc?authuser=0&id=" + url.pathname.split(/[/]/)[3] + "&export=download";
             console.log(au.src);
         }
 
