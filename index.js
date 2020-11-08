@@ -133,7 +133,7 @@ function addSongFromUrl() {
         nowPlayingOutput.style.padding = "16px";
         nowPlayingOutput.style.backgroundColor = "#303030";
         nowPlayingOutput.style.overflowWrap = "break-word";
-        nowPlayingOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command tellraw @a {\"text\":\"Now Playing: " + songName + " - " + artistName + "\",\"color\":\"" + color + "\"}")                  // Insert text
+        nowPlayingOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command tellraw @a {\"text\":\"Now Playing: " + songName + " - " + artistName + "\",\"bold\":true,\"color\":\"" + color + "\"}")                  // Insert text
         document.getElementById("nowPlayingCommandsContainer").appendChild(nowPlayingOutput);
         document.getElementById("songNameInput").value = "";
         document.getElementById("artistNameInput").value = "";
