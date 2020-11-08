@@ -136,6 +136,7 @@ h2 {
 }
 
 #submitSong {
+    margin-top: 16px;
     margin-right: auto;
     margin-left: auto;
     display: block;
@@ -154,4 +155,8 @@ h2 {
 
 #addSongButton:active {
     transform: scale(.9);
+}
+
+#disclaimerLabel {
+    font-size: 14px;
 }

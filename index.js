@@ -50,7 +50,36 @@ function addSongFromUrl() {
 
         // Define the URL of the MP3 audio file
         au.src = document.getElementById("songUrlInput").value;
-        document.getElementById("songUrlInput").innerHTML = "";
+
+        const url = new URL(au.src);
+
+        //Github Public Share Link
+        if (url.hostname == "github.com") {
+            console.log("github");
+            if (au.src.includes("?raw=true")) {
+                console.log(au.src);
+            } else {
+                    au.src = au.src + "?raw=true";
+                    console.log(au.src);
+            }
+        }
+
+        //DropBox Public Share Link
+        if (url.hostname == "www.dropbox.com") {
+            console.log("dropbox");
+            url.hostname = "dl.dropboxusercontent.com";
+            au.src = url;
+            console.log(au.src);
+        }
+
+        if (url.hostname == "drive.google.com") {
+            console.log("google drive");
+            au.src = url.protocol + "docs.google.com//uc?authuser=0&id=" + url.pathname.split(/[/]/)[3] + "&export=download";
+            console.log(au.src);
+        }
+
+
+
 
         // Once the metadata has been loaded, display the duration in the console
         au.addEventListener('loadedmetadata', function(){
@@ -59,7 +88,7 @@ function addSongFromUrl() {
         
         setDuration = setDuration + duration;
         commandDuration = setDuration - duration;
-
+        
         //Calculate the timestamp
         var hours   = Math.floor(commandDuration / 3600);
         var minutes = Math.floor((commandDuration - (hours * 3600)) / 60);
@@ -75,9 +104,7 @@ function addSongFromUrl() {
         var regionName = document.getElementById("regionNameInput").value;
         if (showName == "") {showName = "(show)";}
         if (regionName == "") {regionName = "(region)";}
- 
-        
-        var url = au.src;
+
         
         var output = document.createElement("p");   
         output.style.color = "white";
@@ -87,7 +114,7 @@ function addSongFromUrl() {
         output.style.padding = "16px";
         output.style.backgroundColor = "#303030";
         output.style.overflowWrap = "break-word";
-        output.innerHTML = ("/oa show add " + showName + " " + timestamp + " command oa region temp " + regionName + " " + url + " " + duration)                  // Insert text
+        output.innerHTML = ("/oa show add " + showName + " " + timestamp + " command oa region temp " + regionName + " " + au.src + " " + duration)                  // Insert text
         document.body.appendChild(output);       
         
         },false);
