@@ -133,7 +133,18 @@ function addSongFromUrl() {
         nowPlayingOutput.style.padding = "16px";
         nowPlayingOutput.style.backgroundColor = "#303030";
         nowPlayingOutput.style.overflowWrap = "break-word";
-        nowPlayingOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command tellraw @a {\"text\":\"Now Playing: " + songName + " - " + artistName + "\",\"bold\":true,\"color\":\"" + color + "\"}")                  // Insert text
+        
+        //TEST
+        var checkbox = document.getElementById("checkBox");
+        if (checkbox.checked == true) {
+            nowPlayingOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command tellraw @a {\"text\":\"Now Playing: " + songName + " - " + artistName + "\",\"bold\":true,\"color\":\"" + color + "\"}")
+        } else {
+            nowPlayingOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command tellraw @a {\"text\":\"Now Playing: " + songName + " - " + artistName + "\",\"color\":\"" + color + "\"}")
+        }
+
+        //nowPlayingOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command tellraw @a {\"text\":\"Now Playing: " + songName + " - " + artistName + "\",\"bold\":true,\"color\":\"" + color + "\"}")
+
+
         document.getElementById("nowPlayingCommandsContainer").appendChild(nowPlayingOutput);
         document.getElementById("songNameInput").value = "";
         document.getElementById("artistNameInput").value = "";

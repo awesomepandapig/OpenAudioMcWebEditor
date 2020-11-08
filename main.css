@@ -183,3 +183,11 @@ h2 {
     padding: 3px;
     font-family: Source Sans Pro,Open Sans,sans-serif;
 }
+
+#checkboxContainer {
+ display: inline;
+}
+
+input[type=checkbox] {
+    margin-left: 16px;
+}
