@@ -1,39 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>OpenAudioMc Show Editor</title>
-    <meta name="description" content="">
+    <meta name="description" content="Easily edit OpenAudioMc shows">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="main.css">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@700&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="index.js"></script>
 </head>
 
 <body>
-    <!--<input id="fileinput" type="file" multiple/>-->
-    <!--<br>
-        <p>Name of Show</p>
-        <input id="showNameInput" type="text">
-        <br>
-        <p>Name of Region</p>
-        <input id="regionNameInput" type="text">-->
     <div id="main-container">
         <div id="header">
             <h2 style="margin-top: 0px; margin-right: 16px;">OpenAudioMc Show Editor</h2>
             <button id="addSongButton">Add Song</button>
         </div>
         <div id="dataHeader">
-            <label class="dataHeaderLabel">Show Name:</label>
+            <label for="showNameInput" class="dataHeaderLabel">Show Name:</label>
             <input class="dataHeaderInput" id="showNameInput" type="text">
             <br id="hiddenLineBreak">
-            <label class="dataHeaderLabel">Region Name:</label>
+            <label for="regionNameInput" class="dataHeaderLabel">Region Name:</label>
             <input class="dataHeaderInput" id="regionNameInput" type="text">
             <br id="hiddenLineBreak">
-            <label class="dataHeaderLabel">Now Playing Color:</label>
+            <label for="colorSelect" class="dataHeaderLabel">Now Playing Color:</label>
             <select id="colorSelect">
                 <option value="black">Black</option>
                 <option value="dark_blue">Dark Blue</option>
@@ -54,7 +46,7 @@
             </select>
             <br id="hiddenLineBreak">
             <br id="hiddenLineBreak">
-            <label class="dataHeaderLabel">Bold Now Playing:</label>
+            <label for="checkBox" class="dataHeaderLabel">Bold Now Playing:</label>
             <input id="checkBox" type="checkbox">
         </div>
         <!-- The Modal -->
