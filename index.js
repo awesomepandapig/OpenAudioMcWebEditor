@@ -130,6 +130,7 @@ function toggleNowPlayingCommands() {
 
 
 function addCommand() {
+    document.getElementById("maxValueLabel").style.display = "none";
     hours = document.getElementById("hourInput").value;
     minutes = document.getElementById("minuteInput").value;
     seconds = document.getElementById("secondInput").value;
