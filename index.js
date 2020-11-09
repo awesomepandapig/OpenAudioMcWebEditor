@@ -168,5 +168,5 @@ function formatTime() {
     if ((minutes != "00") && (minutes   < 10)) {minutes = "0"+minutes;}
     if ((seconds != "00") && (seconds   < 10)) {seconds = "0"+seconds;}
     timestamp = (hours + ":" + minutes + ":" + seconds);
-    if (timestamp == "0:0:0") {timestamp = "[Timestamp Here]"}
+    if (timestamp == "0:0:0") {timestamp = "00:00:00"}
 }
