@@ -130,12 +130,14 @@ function toggleNowPlayingCommands() {
 
 
 function addCommand() {
-    document.getElementById("addCommandModal").style.display = "none";
     hours = document.getElementById("hourInput").value;
     minutes = document.getElementById("minuteInput").value;
     seconds = document.getElementById("secondInput").value;
     formatTime();
-    if ((hours > 23) || (minutes > 59) || (seconds > 59)) {} else {
+    if ((hours > 23) || (minutes > 59) || (seconds > 59)) {
+        document.getElementById("maxValueLabel").style.display = "block";
+    } else {
+        document.getElementById("addCommandModal").style.display = "none";
         if ((document.getElementById("commandInput").value) == "") {} else {
             var command = document.getElementById("commandInput").value;
             showName = document.getElementById("showNameInput").value;
@@ -165,4 +167,5 @@ function formatTime() {
     if ((minutes != "00") && (minutes   < 10)) {minutes = "0"+minutes;}
     if ((seconds != "00") && (seconds   < 10)) {seconds = "0"+seconds;}
     timestamp = (hours + ":" + minutes + ":" + seconds);
+    if (timestamp == "0:0:0") {timestamp = "[Timestamp Here]"}
 }
