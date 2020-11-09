@@ -1,6 +1,8 @@
 var setDuration = 0;
+var showName = "";
+var regionName = "";
 function addSongFromUrl() {
-    document.getElementById("myModal").style.display = "none";
+    document.getElementById("addSongModal").style.display = "none";
 
     if ((document.getElementById("songUrlInput").value) == "") {
         
@@ -60,8 +62,8 @@ function addSongFromUrl() {
 
         var timestamp = (hours + ":" + minutes + ":" + seconds);
         
-        var showName = document.getElementById("showNameInput").value;
-        var regionName = document.getElementById("regionNameInput").value;
+        showName = document.getElementById("showNameInput").value;
+        regionName = document.getElementById("regionNameInput").value;
         if (showName == "") {showName = "[Show Name Here]";}
         if (regionName == "") {regionName = "[Region Name Here]";}
 
@@ -124,4 +126,28 @@ function toggleNowPlayingCommands() {
     commandsDiv.style.display = "none";
     document.getElementById("hideNowPlayingCommandsButton").innerHTML = "Show Now Playing Commands";
   }
+}
+
+function addCommand() {
+    document.getElementById("addCommandModal").style.display = "none";
+    if ((document.getElementById("commandInput").value) == "") {} else {
+        var commandTimestamp = document.getElementById("timeInput").value;
+        var command = document.getElementById("commandInput").value;
+        showName = document.getElementById("showNameInput").value;
+        regionName = document.getElementById("regionNameInput").value;
+        if (showName == "") {showName = "[Show Name Here]";}
+        if (regionName == "") {regionName = "[Region Name Here]";}
+        var commandOutput = document.createElement("p");   
+        commandOutput.style.color = "white";
+        commandOutput.style.margin = "16px";
+        commandOutput.style.marginRight = "16px";
+        commandOutput.style.marginBottom = "16px";
+        commandOutput.style.padding = "16px";
+        commandOutput.style.backgroundColor = "#303030";
+        commandOutput.style.overflowWrap = "break-word";
+        commandOutput.innerHTML = ("/oa show add " + showName + " " + commandTimestamp + " command " + command);
+        document.getElementById("commandsContainer").appendChild(commandOutput);
+        document.getElementById("timeInput").value = "";
+        document.getElementById("commandInput").value = "";
+    }
 }
