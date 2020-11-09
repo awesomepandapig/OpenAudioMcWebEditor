@@ -60,8 +60,11 @@ function addSongFromUrl() {
         minutes = Math.floor((commandDuration - (hours * 3600)) / 60);
         seconds = commandDuration - (hours * 3600) - (minutes * 60);
 
-        formatTime();
-        
+        if (hours < 10) {hours = "0"+hours;}
+        if (minutes < 10) {minutes = "0"+minutes;}
+        if (seconds < 10) {seconds = "0"+seconds;}
+        timestamp = (hours + ":" + minutes + ":" + seconds);
+    
         showName = document.getElementById("showNameInput").value;
         regionName = document.getElementById("regionNameInput").value;
         if (showName == "") {showName = "[Show Name Here]";}
@@ -134,7 +137,11 @@ function addCommand() {
     hours = document.getElementById("hourInput").value;
     minutes = document.getElementById("minuteInput").value;
     seconds = document.getElementById("secondInput").value;
-    formatTime();
+    if ((hours != "00") && (hours   < 10)) {hours = "0"+hours;}
+    if ((minutes != "00") && (minutes   < 10)) {minutes = "0"+minutes;}
+    if ((seconds != "00") && (seconds   < 10)) {seconds = "0"+seconds;}
+    timestamp = (hours + ":" + minutes + ":" + seconds);
+    if (timestamp == "0:0:0") {timestamp = "00:00:00"}
     if ((hours > 23) || (minutes > 59) || (seconds > 59)) {
         document.getElementById("maxValueLabel").style.display = "block";
     } else {
@@ -161,12 +168,4 @@ function addCommand() {
             document.getElementById("commandInput").value = "";
         }
     }
-}
-
-function formatTime() {
-    if ((hours != "00") && (hours   < 10)) {hours = "0"+hours;}
-    if ((minutes != "00") && (minutes   < 10)) {minutes = "0"+minutes;}
-    if ((seconds != "00") && (seconds   < 10)) {seconds = "0"+seconds;}
-    timestamp = (hours + ":" + minutes + ":" + seconds);
-    if (timestamp == "0:0:0") {timestamp = "00:00:00"}
 }
