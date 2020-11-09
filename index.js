@@ -127,11 +127,19 @@ function toggleNowPlayingCommands() {
     document.getElementById("hideNowPlayingCommandsButton").innerHTML = "Show Now Playing Commands";
   }
 }
-
+var commandTimestamp = "";
 function addCommand() {
     document.getElementById("addCommandModal").style.display = "none";
     if ((document.getElementById("commandInput").value) == "") {} else {
-        var commandTimestamp = document.getElementById("timeInput").value;
+
+        var commandHrs = document.getElementById("hourInput").value;
+        var commandMins = document.getElementById("minuteInput").value;
+        var commandSecs = document.getElementById("secondInput").value;
+        if (commandHrs   < 10) {commandHrs   = "0"+commandHrs;}
+        if (commandMins < 10) {commandMins = "0"+commandMins;}
+        if (commandSecs < 10) {commandSecs = "0"+commandSecs;}
+        commandTimestamp = (commandHrs + ":" + commandMins + ":" + commandSecs);
+        console.log(commandTimestamp);
         var command = document.getElementById("commandInput").value;
         showName = document.getElementById("showNameInput").value;
         regionName = document.getElementById("regionNameInput").value;

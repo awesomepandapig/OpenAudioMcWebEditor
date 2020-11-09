@@ -169,10 +169,6 @@ h2 {
     transform: scale(.9);
 }
 
-#disclaimerLabel {
-    font-size: 14px;
-}
-
 #hideNowPlayingCommandsButton {
     background-color: white;
     padding-right: 16px;
@@ -205,28 +201,26 @@ input[type=checkbox] {
     margin-left: 16px;
 }
 
-#timeInput {
-    margin-top: 16px;
-    width: 55px;
-    padding: 3px;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    background-color: gray;
-    border-radius: 3px;
-    border: none;
-    height: 16px;
-    color: white;
-    font-family: Source Sans Pro,Open Sans,sans-serif;
-    -we
+#timeContainer {
+    display: flex;
+    width: 80px;
 }
 
-#timeInput::-webkit-datetime-edit-ampm-field {
-   display: none;
- }
+#timeContainer input {
+    padding: 3px;
+    width: 40px;
+}
 
-#timeInput::-webkit-calendar-picker-indicator {
-     display: none;
- }
-#timeInput::-webkit-calendar-picker-indicator:focus {
-    display: none;
+#timeContainer label {
+    margin-top: 16px;
+}
+
+#timeContainer input::placeholder  {
+    color: #d3d3d3;
+    font-size: 14px;
+}
+
+.disclaimerLabel {
+    margin-bottom: 16px;
+    font-size: 14px;
 }

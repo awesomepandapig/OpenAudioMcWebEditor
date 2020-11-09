@@ -73,7 +73,7 @@
 
                     <input class="modal-input" id="songUrlInput" type="url" required onfocus="this.value=''">
 
-                    <label id="disclaimerLabel" style="margin-bottom: 16px;">Supports Dropbox, Github, Google Drive, & Custom Hosting</label>
+                    <label class="disclaimerLabel">Supports Dropbox, Github, Google Drive, & Custom Hosting</label>
 
                     <button class="submit-button" id="submitSong" type="submit" onclick="addSongFromUrl();">Add Song</button>
                 </div>
@@ -88,7 +88,11 @@
                     <h3>Add a command</h3>
                     <label>Time:</label>
                     <div id="timeContainer">
-                        <input id="timeInput" value="00:00:00" type="time" step="1">
+                        <input id="hourInput" class="modal-input" type="number" placeholder="HH" maxlength="2" max="23" min="0">
+                        <label>:</label>
+                        <input id="minuteInput" class="modal-input" type="number" placeholder="MM" maxlength="2" max="59" min="0">
+                        <label>:</label>
+                        <input id="secondInput" class="modal-input" type="number" placeholder="SS" maxlength="2" max="59" min="0">
                     </div>
 
                     <label>Command:</label>
