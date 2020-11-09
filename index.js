@@ -1,6 +1,10 @@
 var setDuration = 0;
 var showName = "";
 var regionName = "";
+var hours = 0;
+var minutes = 0;
+var seconds = 0;
+var timestamp = "";
 function addSongFromUrl() {
     document.getElementById("addSongModal").style.display = "none";
 
@@ -52,15 +56,11 @@ function addSongFromUrl() {
         commandDuration = setDuration - duration;
         
         //Calculate the timestamp
-        var hours   = Math.floor(commandDuration / 3600);
-        var minutes = Math.floor((commandDuration - (hours * 3600)) / 60);
-        var seconds = commandDuration - (hours * 3600) - (minutes * 60);
+        hours   = Math.floor(commandDuration / 3600);
+        minutes = Math.floor((commandDuration - (hours * 3600)) / 60);
+        seconds = commandDuration - (hours * 3600) - (minutes * 60);
 
-        if (hours   < 10) {hours   = "0"+hours;}
-        if (minutes < 10) {minutes = "0"+minutes;}
-        if (seconds < 10) {seconds = "0"+seconds;}
-
-        var timestamp = (hours + ":" + minutes + ":" + seconds);
+        formatTime();
         
         showName = document.getElementById("showNameInput").value;
         regionName = document.getElementById("regionNameInput").value;
@@ -127,35 +127,42 @@ function toggleNowPlayingCommands() {
     document.getElementById("hideNowPlayingCommandsButton").innerHTML = "Show Now Playing Commands";
   }
 }
-var commandTimestamp = "";
+
+
 function addCommand() {
     document.getElementById("addCommandModal").style.display = "none";
-    if ((document.getElementById("commandInput").value) == "") {} else {
-
-        var commandHrs = document.getElementById("hourInput").value;
-        var commandMins = document.getElementById("minuteInput").value;
-        var commandSecs = document.getElementById("secondInput").value;
-        if (commandHrs   < 10) {commandHrs   = "0"+commandHrs;}
-        if (commandMins < 10) {commandMins = "0"+commandMins;}
-        if (commandSecs < 10) {commandSecs = "0"+commandSecs;}
-        commandTimestamp = (commandHrs + ":" + commandMins + ":" + commandSecs);
-        console.log(commandTimestamp);
-        var command = document.getElementById("commandInput").value;
-        showName = document.getElementById("showNameInput").value;
-        regionName = document.getElementById("regionNameInput").value;
-        if (showName == "") {showName = "[Show Name Here]";}
-        if (regionName == "") {regionName = "[Region Name Here]";}
-        var commandOutput = document.createElement("p");   
-        commandOutput.style.color = "white";
-        commandOutput.style.margin = "16px";
-        commandOutput.style.marginRight = "16px";
-        commandOutput.style.marginBottom = "16px";
-        commandOutput.style.padding = "16px";
-        commandOutput.style.backgroundColor = "#303030";
-        commandOutput.style.overflowWrap = "break-word";
-        commandOutput.innerHTML = ("/oa show add " + showName + " " + commandTimestamp + " command " + command);
-        document.getElementById("commandsContainer").appendChild(commandOutput);
-        document.getElementById("timeInput").value = "";
-        document.getElementById("commandInput").value = "";
+    hours = document.getElementById("hourInput").value;
+    minutes = document.getElementById("minuteInput").value;
+    seconds = document.getElementById("secondInput").value;
+    formatTime();
+    if ((hours > 23) || (minutes > 59) || (seconds > 59)) {} else {
+        if ((document.getElementById("commandInput").value) == "") {} else {
+            var command = document.getElementById("commandInput").value;
+            showName = document.getElementById("showNameInput").value;
+            regionName = document.getElementById("regionNameInput").value;
+            if (showName == "") {showName = "[Show Name Here]";}
+            if (regionName == "") {regionName = "[Region Name Here]";}
+            var commandOutput = document.createElement("p");   
+            commandOutput.style.color = "white";
+            commandOutput.style.margin = "16px";
+            commandOutput.style.marginRight = "16px";
+            commandOutput.style.marginBottom = "16px";
+            commandOutput.style.padding = "16px";
+            commandOutput.style.backgroundColor = "#303030";
+            commandOutput.style.overflowWrap = "break-word";
+            commandOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command " + command);
+            document.getElementById("commandsContainer").appendChild(commandOutput);
+            document.getElementById("hourInput").value = "";
+            document.getElementById("minuteInput").value = "";
+            document.getElementById("secondInput").value = "";
+            document.getElementById("commandInput").value = "";
+        }
     }
+}
+
+function formatTime() {
+    if ((hours != "00") && (hours   < 10)) {hours = "0"+hours;}
+    if ((minutes != "00") && (minutes   < 10)) {minutes = "0"+minutes;}
+    if ((seconds != "00") && (seconds   < 10)) {seconds = "0"+seconds;}
+    timestamp = (hours + ":" + minutes + ":" + seconds);
 }
