@@ -41,6 +41,21 @@ function addSongFromUrl() {
             au.src = "https://www.docs.google.com//uc?authuser=0&id=" + url.pathname.split(/[/]/)[3] + "&export=download";
             console.log(au.src);
         }
+
+        //YouTube Link
+        if (url.hostname == "www.youtube.com") {
+            console.log("youtube");
+            au.src = "https://oa-yt.snowdns.de/?v=" + au.src.split('=')[1];
+            console.log(au.src);
+        }
+
+        //YouTube Share Link
+        if (url.hostname == "youtu.be") {
+            console.log("youtube");
+            au.src = "https://oa-yt.snowdns.de/?v=" + url.pathname.split('/')[1];
+            console.log(au.src);
+        }
+
         // Once the metadata has been loaded, display the duration in the console
         au.addEventListener('loadedmetadata', function(){
         // Obtain the duration in seconds of the audio file
@@ -59,7 +74,6 @@ function addSongFromUrl() {
         showName = document.getElementById("showNameInput").value;
         regionName = document.getElementById("regionNameInput").value;
         regions = regionName.split(', ');
-        console.log(regions);
         if (showName == "") {showName = "[Show Name Here]";}
         if (regionName == "") {regionName = "[Region Name Here]";}
         for (i = 0; i < regions.length; i++) {
