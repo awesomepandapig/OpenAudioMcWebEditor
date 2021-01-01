@@ -169,6 +169,10 @@ h2 {
     transform: scale(.9);
 }
 
+#addCommandButton:active {
+    transform: scale(.9);
+}
+
 #hideNowPlayingCommandsButton {
     background-color: white;
     padding-right: 16px;
