@@ -55,7 +55,8 @@ function addSongFromUrl() {
             au.src = "https://oa-yt.snowdns.de/?v=" + url.pathname.split('/')[1];
             console.log(au.src);
         }
-
+        Spinner();
+        Spinner.show();
         // Once the metadata has been loaded, display the duration in the console
         au.addEventListener('loadedmetadata', function(){
         // Obtain the duration in seconds of the audio file
@@ -115,6 +116,7 @@ function addSongFromUrl() {
         document.getElementById("artistNameInput").value = "";
         document.getElementById("songUrlInput").value = "";
         document.getElementById("hideNowPlayingCommandsButton").style.display = "block";
+        Spinner.hide();
         },false);
     } 
 }
