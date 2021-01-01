@@ -218,9 +218,21 @@ input[type=checkbox] {
 #timeContainer input::placeholder  {
     color: #d3d3d3;
     font-size: 14px;
+    text-align: center;
 }
 
 .disclaimerLabel {
     margin-bottom: 16px;
     font-size: 14px;
 }
+
+
+/*
+#commandsContainer {
+    margin-top: -16px;
+    display: block;
+}
+
+#commandsContainer p {
+    margin-bottom: -16px;
+}*/

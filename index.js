@@ -5,20 +5,19 @@ var hours = 0;
 var minutes = 0;
 var seconds = 0;
 var timestamp = "";
+var duration = 0;
+var commandDuration = 0;
+var songAmt = 0;
+var command = "";
+var regions = [];
 function addSongFromUrl() {
     document.getElementById("addSongModal").style.display = "none";
-
-    if ((document.getElementById("songUrlInput").value) == "") {
-        
-    } else {
+    if ((document.getElementById("songUrlInput").value) == "") {} else {
         // Create a non-dom allocated Audio element
         var au = document.createElement('audio');
-
         // Define the URL of the MP3 audio file
         au.src = document.getElementById("songUrlInput").value;
-
         const url = new URL(au.src);
-
         //Github Public Share Link
         if (url.hostname == "github.com") {
             console.log("github");
@@ -29,7 +28,6 @@ function addSongFromUrl() {
                     console.log(au.src);
             }
         }
-
         //DropBox Public Share Link
         if (url.hostname == "www.dropbox.com") {
             console.log("dropbox");
@@ -37,59 +35,53 @@ function addSongFromUrl() {
             au.src = url;
             console.log(au.src);
         }
-
+        //Google Drive Public Share Link
         if (url.hostname == "drive.google.com") {
             console.log("google drive");
             au.src = "https://www.docs.google.com//uc?authuser=0&id=" + url.pathname.split(/[/]/)[3] + "&export=download";
             console.log(au.src);
         }
-
-
-
-
         // Once the metadata has been loaded, display the duration in the console
         au.addEventListener('loadedmetadata', function(){
         // Obtain the duration in seconds of the audio file
-        var duration = Math.floor(au.duration);
-        
+        duration = Math.floor(au.duration);
         setDuration = setDuration + duration;
         commandDuration = setDuration - duration;
-        
         //Calculate the timestamp
         hours   = Math.floor(commandDuration / 3600);
         minutes = Math.floor((commandDuration - (hours * 3600)) / 60);
         seconds = commandDuration - (hours * 3600) - (minutes * 60);
-
         if (hours < 10) {hours = "0"+hours;}
         if (minutes < 10) {minutes = "0"+minutes;}
         if (seconds < 10) {seconds = "0"+seconds;}
         timestamp = (hours + ":" + minutes + ":" + seconds);
-    
+        //Get the names of the show & regions
         showName = document.getElementById("showNameInput").value;
         regionName = document.getElementById("regionNameInput").value;
+        regions = regionName.split(', ');
+        console.log(regions);
         if (showName == "") {showName = "[Show Name Here]";}
         if (regionName == "") {regionName = "[Region Name Here]";}
-
-        //Creates the song commands
-        var commandOutput = document.createElement("p");   
-        commandOutput.style.color = "white";
-        commandOutput.style.margin = "16px";
-        commandOutput.style.marginRight = "16px";
-        commandOutput.style.marginBottom = "16px";
-        commandOutput.style.padding = "16px";
-        commandOutput.style.backgroundColor = "#303030";
-        commandOutput.style.overflowWrap = "break-word";
-        commandOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command oa region temp " + regionName + " " + au.src + " " + duration)                  // Insert text
-        document.getElementById("commandsContainer").appendChild(commandOutput); 
-        
+        for (i = 0; i < regions.length; i++) {
+            regionName = regions[i];
+            //Creates the song commands
+            var commandOutput = document.createElement("p");   
+            commandOutput.style.color = "white";
+            commandOutput.style.margin = "16px";
+            commandOutput.style.marginRight = "16px";
+            commandOutput.style.marginBottom = "16px";
+            commandOutput.style.padding = "16px";
+            commandOutput.style.backgroundColor = "#303030";
+            commandOutput.style.overflowWrap = "break-word";
+            commandOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command oa region temp " + regionName + " " + au.src + " " + duration)                  // Insert text
+            document.getElementById("commandsContainer").appendChild(commandOutput); 
+        }
         //Creates the now playing commands
         var songName = document.getElementById("songNameInput").value;
         var artistName = document.getElementById("artistNameInput").value;
         var color = document.getElementById("colorSelect").value;
-        
         if (songName == "") {songName = "[Song Name Here]";}
         if (artistName == "") {artistName = "[Artist Name Here]";}
-
         var nowPlayingOutput = document.createElement("p");   
         nowPlayingOutput.style.color = "white";
         nowPlayingOutput.style.margin = "16px";
@@ -98,18 +90,12 @@ function addSongFromUrl() {
         nowPlayingOutput.style.padding = "16px";
         nowPlayingOutput.style.backgroundColor = "#303030";
         nowPlayingOutput.style.overflowWrap = "break-word";
-        
-        //TEST
         var checkbox = document.getElementById("checkBox");
         if (checkbox.checked == true) {
             nowPlayingOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command tellraw @a {\"text\":\"Now Playing: " + songName + " - " + artistName + "\",\"bold\":true,\"color\":\"" + color + "\"}")
         } else {
             nowPlayingOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command tellraw @a {\"text\":\"Now Playing: " + songName + " - " + artistName + "\",\"color\":\"" + color + "\"}")
         }
-
-        //nowPlayingOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command tellraw @a {\"text\":\"Now Playing: " + songName + " - " + artistName + "\",\"bold\":true,\"color\":\"" + color + "\"}")
-
-
         document.getElementById("nowPlayingCommandsContainer").appendChild(nowPlayingOutput);
         document.getElementById("songNameInput").value = "";
         document.getElementById("artistNameInput").value = "";
@@ -117,7 +103,6 @@ function addSongFromUrl() {
         document.getElementById("hideNowPlayingCommandsButton").style.display = "block";
         },false);
     } 
-    
 }
 
 function toggleNowPlayingCommands() {
@@ -147,7 +132,7 @@ function addCommand() {
     } else {
         document.getElementById("addCommandModal").style.display = "none";
         if ((document.getElementById("commandInput").value) == "") {} else {
-            var command = document.getElementById("commandInput").value;
+            command = document.getElementById("commandInput").value;
             showName = document.getElementById("showNameInput").value;
             regionName = document.getElementById("regionNameInput").value;
             if (showName == "") {showName = "[Show Name Here]";}
@@ -169,3 +154,134 @@ function addCommand() {
         }
     }
 }
+/*
+//test functionality for bpm of song
+
+function test() {
+    var aud = document.createElement('audio');
+    aud.src = "https://github.com/awesomepandapig/mcprom.net/blob/master/audio/Latch%20Feat.%20Sam%20Smith-k0jLE7tTwjY.mp3?raw=true";
+    aud.addEventListener('loadedmetadata', function() {
+            
+        // Obtain the duration in seconds of the audio file
+        duration = Math.floor(aud.duration);
+        showName = "videoshow";
+        setDuration = setDuration + duration;
+        commandDuration = setDuration - duration;
+        
+        //Calculate the timestamp
+        hours   = Math.floor(commandDuration / 3600);
+        minutes = Math.floor((commandDuration - (hours * 3600)) / 60);
+        seconds = commandDuration - (hours * 3600) - (minutes * 60);
+        while (commandDuration < setDuration) {
+
+            // Define the URL of the MP3 audio file
+            
+
+            commandDuration = commandDuration + 1;
+            seconds = seconds + 1;
+            if (seconds > 59) {
+                seconds = 0;
+                minutes = minutes + 1;
+            }
+
+            if (minutes > 59) {
+                minutes = 0;
+                hours = hours + 1;
+            }
+
+            if (hours > 24) {
+                hours = 0;
+            }
+            if ((hours < 10) && (minutes < 10) && (seconds < 10)) {
+                timestamp = ("0" + hours + ":" + "0" + minutes + ":" + "0" + seconds);
+            } else if ((hours < 10) && (minutes < 10)) {
+                timestamp = ("0" + hours + ":" + "0" + minutes + ":" + seconds);
+            } else if ((hours < 10) && (seconds < 10)) {
+                timestamp = ("0" + hours + ":" + minutes + ":" + "0" + seconds);
+            } else if ((minutes < 10) && (seconds < 10)) {
+                timestamp = (hours + ":" + "0" + minutes + ":" + "0" + seconds);
+            } else {
+                timestamp = (hours + ":" + minutes + ":" + seconds);
+            }
+
+            var commandOutput2 = document.createElement("p");     
+            var commandOutput3 = document.createElement("p");   
+            commandOutput2.innerHTML = ("/oa show add " + showName + " " + timestamp + " command " + "setblock 0 5 0 minecraft:concrete 13");
+            commandOutput2.style.color = "white";
+            commandOutput3.style.color = "white";
+            document.getElementById("main-container").style.display = "none";
+            document.getElementById("testBtn").style.display = "none";
+            document.getElementById("commandsContainer").appendChild(commandOutput2); 
+
+            commandDuration = commandDuration + 1;
+            seconds = seconds + 1;
+            if (seconds > 59) {
+                seconds = 0;
+                minutes = minutes + 1;
+            }
+
+            if (minutes > 59) {
+                minutes = 0;
+                hours = hours + 1;
+            }
+
+            if (hours > 24) {
+                hours = 0;
+            }
+            if ((hours < 10) && (minutes < 10) && (seconds < 10)) {
+                timestamp = ("0" + hours + ":" + "0" + minutes + ":" + "0" + seconds);
+            } else if ((hours < 10) && (minutes < 10)) {
+                timestamp = ("0" + hours + ":" + "0" + minutes + ":" + seconds);
+            } else if ((hours < 10) && (seconds < 10)) {
+                timestamp = ("0" + hours + ":" + minutes + ":" + "0" + seconds);
+            } else if ((minutes < 10) && (seconds < 10)) {
+                timestamp = (hours + ":" + "0" + minutes + ":" + "0" + seconds);
+            } else {
+                timestamp = (hours + ":" + minutes + ":" + seconds);
+            }
+
+            commandOutput3.innerHTML = ("/oa show add " + showName + " " + timestamp + " command " + "setblock 0 5 0 minecraft:concrete 14");
+            document.getElementById("commandsContainer").appendChild(commandOutput3); 
+        }
+    },false);
+}
+
+function addTime() {
+    for (i = 0; i < songAmt; i++) {
+        if (songAmt == 0) {} else {
+            var addTimeInput = document.getElementById("addTimeInput").value;
+            var timeType = document.getElementById("timeTypeSelector").value;
+            if (addTimeInput > 59) {
+                document.getElementById("maxAddValueLabel").style.display = "block";
+            } else {
+                tempTime = setDuration + addTimeInput + timeType;
+                hours   = Math.floor(tempTime / 3600);
+                minutes = Math.floor((tempTime - (hours * 3600)) / 60);
+                seconds = tempTime - (hours * 3600) - (minutes * 60);
+                if (hours < 10) {hours = "0"+hours;}
+                if (minutes < 10) {minutes = "0"+minutes;}
+                if (seconds < 10) {seconds = "0"+seconds;}
+                timestamp = (hours + ":" + minutes + ":" + seconds);
+                command = document.getElementById("commandInput").value;
+                showName = document.getElementById("showNameInput").value;
+                regionName = document.getElementById("regionNameInput").value;
+                if (showName == "") {showName = "[Show Name Here]";}
+                if (regionName == "") {regionName = "[Region Name Here]";}
+                var addCommandOutput = document.createElement("p");   
+                addCommandOutput.style.color = "white";
+                addCommandOutput.style.margin = "16px";
+                addCommandOutput.style.marginRight = "16px";
+                addCommandOutput.style.marginBottom = "16px";
+                addCommandOutput.style.padding = "16px";
+                addCommandOutput.style.backgroundColor = "#303030";
+                addCommandOutput.style.overflowWrap = "break-word";
+                addCommandOutput.innerHTML = ("/oa show add " + showName + " " + timestamp + " command " + command);
+                document.getElementById("commandsContainer").appendChild(addCommandOutput);
+                document.getElementById("addTimeInput").value = "";
+                document.getElementById("timeTypeSelector").value = "";
+                document.getElementById("commandInput").value = "";
+            }
+        }
+    }
+}
+*/
