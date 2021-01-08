@@ -13,6 +13,7 @@
     <link rel="manifest" href="site.webmanifest">
     <link rel="stylesheet" href="main.css">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/uuid@latest/dist/umd/uuidv4.min.js"></script>
     <script src="loading-spinner.js"></script>
     <script src="index.js"></script>
 </head>
@@ -21,15 +22,24 @@
     <div id="main-container">
         <div id="header">
             <h2 style="margin-top: 0px; margin-right: 16px;">OpenAudioMc Show Editor</h2>
-            <button id="addSongButton">Add Song</button>
-            <button id="addCommandButton">Add Command</button>
+            <button id="addSongButton">Add Songs</button>
+            <button id="addCommandButton">Add Commands</button>
+            <button id="bpmButton">Add BPM Effects</button>
+            <button id="saveBtn" onclick="download(JSON.stringify(show), 'application/json');">Save Show</button>
         </div>
         <div id="dataHeader">
+            <label for="worldNameInput" class="dataHeaderLabel">World Name:</label>
+            <input class="dataHeaderInput" id="worldNameInput" type="text">
+            <br id="hiddenLineBreak">
             <label for="showNameInput" class="dataHeaderLabel">Show Name:</label>
             <input class="dataHeaderInput" id="showNameInput" type="text">
             <br id="hiddenLineBreak">
             <label for="regionNameInput" class="dataHeaderLabel">Region Names:</label>
             <input class="dataHeaderInput" id="regionNameInput" type="text" placeholder="Region 1, Region 2, Region 3">
+            <br id="hiddenLineBreak">
+            <br>
+            <label for="enableBox" class="dataHeaderLabel">Enable Now Playing:</label>
+            <input id="enableBox" type="checkbox">
             <br id="hiddenLineBreak">
             <label for="colorSelect" class="dataHeaderLabel">Now Playing Color:</label>
             <select id="colorSelect">
@@ -71,10 +81,10 @@
                     <input class="modal-input" id="artistNameInput" type="text">
                     
                     <label>Song Url:</label>
-
+                    <br>
+                    <label style="color: white; font-size: 14px;"class="disclaimerLabel">(Supports Dropbox, Github, Google Drive, YouTube, & Custom Hosting)</label>
                     <input class="modal-input" id="songUrlInput" type="url" required onfocus="this.value=''">
-
-                    <label class="disclaimerLabel">Supports Dropbox, Github, Google Drive, YouTube, & Custom Hosting</label>
+                    <label class="warning-label" id="songUrlEmptyWarning">You must enter a URL</label>
 
                     <button class="submit-button" id="submitSong" type="submit" onclick="addSongFromUrl();">Add Song</button>
                 </div>
@@ -87,21 +97,43 @@
                 <span class="close" id="close2">&times;</span>
                 <div id="addCommandForm">
                     <h3>Add a command</h3>
-                    <label>Time:</label>
-                    <div id="timeContainer">
-                        <input id="hourInput" class="modal-input" type="number" placeholder="HH" maxlength="2" max="23" min="0">
-                        <label>:</label>
-                        <input id="minuteInput" class="modal-input" type="number" placeholder="MM" maxlength="2" max="59" min="0">
-                        <label>:</label>
-                        <input id="secondInput" class="modal-input" type="number" placeholder="SS" maxlength="2" max="59" min="0">
-                    </div>
-                    <label style="font-size: 12px; display: none;" id="maxValueLabel" class="disclaimerLabel">Max value 23:59:59</label>
-                    <label style="font-size: 12px; display: none;" id="minValueLabel" class="disclaimerLabel">Min value 00:00:00</label>
+                    <label>Add time in ms:</label>
+                    <br>
+                    <label class="disclaimerLabel">(Adds time to the start of the current song <b>NOT</b> the current timestamp)</label> 
+                    <input id="timeInput" class="modal-input" type="number" min="0">
+                    <label class="warning-label" id="timeEmptyWarning">You must enter a value</label>
                     <label>Command:</label>
-                    
                     <input id="commandInput" class="modal-input" type="text">
-        
+                    <label class="warning-label" id="commandEmptyWarning">You must enter a command</label>
                     <button class="submit-button" id="submitCommand" type="submit" onclick="addCommand();">Add Command</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="bpmModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close" id="close3">&times;</span>
+                <div id="bpmForm">
+                    <h3>Add a BPM Effect</h3>
+                    
+                    <label>Song Url:</label>
+                    <br>
+                    <label style="color: white; font-size: 14px;"class="disclaimerLabel">(Supports Dropbox, Github, Google Drive, YouTube, & Custom Hosting)</label>
+                    <input class="modal-input url-input" id="bpmSongUrlInput" type="url" required onfocus="this.value=''">
+                    <label class="warning-label" id="urlEmptyWarning">You must enter a URL</label>
+                    
+                    <label for="bpmInput">BPM</label><br>
+                    <label style="color: white; font-size: 14px;"class="disclaimerLabel">(I recommend using <a href="https://songbpm.com/" target="_blank">this site</a> to find the bpm of a song)</label>
+                    <input class="modal-input" type="number" id="bpmInput">
+                    <label class="warning-label" id="bpmEmptyWarning">You must enter a BPM value</label>
+                    <label class="warning-label" id="bpmInvalidWarning">BPM must be at least 50</label>
+
+                    <label for="commandsInput">Commands</label><br>
+                    <label class="disclaimerLabel">(Seperate with a comma space)</label>           
+                    <textarea class="modal-input" id="commandsInput" type="text" placeholder="command1, command2, command3"></textarea>
+                    <label class="warning-label" id="bpmCommandEmptyWarning">You must enter a command</label>
+                    <button class="submit-button" id="submitBpm" type="submit" onclick="addBpm();">Add BPM Effect</button>
                 </div>
             </div>
         </div>
@@ -110,28 +142,36 @@
     <div id="commandsContainer"></div>
     <button id="hideNowPlayingCommandsButton" onclick="toggleNowPlayingCommands();">Hide Now Playing Commands</button>
     <div id="nowPlayingCommandsContainer"></div>
-    <!--<button id="testBtn" onclick="test();">TEST BUTTON</button>
-    <button id="idBtn" onclick="makeid();">MAKE ID</button>-->
     <script>
         // Get the modal
         var modal = document.getElementById("addSongModal");
         var modal2 = document.getElementById("addCommandModal");
+        var modal3 = document.getElementById("bpmModal");
 
         // Get the button that opens the modal
         var btn = document.getElementById("addSongButton");
         var btn2 = document.getElementById("addCommandButton");
+        var btn3 = document.getElementById("bpmButton");
 
         // Get the <span> element that closes the modal
         var span = document.getElementById("close1");
         var span2 = document.getElementById("close2");
+        var span3 = document.getElementById("close3");
 
         // When the user clicks the button, open the modal 
         btn.onclick = function () {
             modal.style.display = "block";
+            hideWarnings();
         }
 
         btn2.onclick = function () {
             modal2.style.display = "block";
+            hideWarnings();
+        }
+        
+        btn3.onclick = function () {
+            modal3.style.display = "block";
+            hideWarnings();
         }
 
         // When the user clicks on <span> (x), close the modal
@@ -141,6 +181,9 @@
         span2.onclick = function () {
             modal2.style.display = "none";
         }
+        span3.onclick = function () {
+            modal3.style.display = "none";
+        }
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
@@ -148,6 +191,8 @@
                 modal.style.display = "none";
             } else if (event.target == modal2) {
                 modal2.style.display = "none";
+            } else if (event.target == modal3) {
+                modal3.style.display = "none";
             }
         }
     </script>

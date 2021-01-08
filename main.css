@@ -75,19 +75,45 @@ input {
 #header {
     display: flex;
     height: 50px;
+    margin-bottom: 50px;
 }
 
 #dataHeader {
     display: block;
+    margin: 0 auto;
 }
 
 #hiddenLineBreak {
     display: none;
 }
 
+@media screen and (min-width: 800px) {
+    #addSongButton {
+      height: 50px;
+    }
+    #addCommandButton {
+      height: 50px;
+    }
+    #bpmButton {
+      height: 50px;
+    }
+  }
+
 @media screen and (max-width: 800px) {
   #dataHeader {
     margin-top: 50px;
+  }
+  #addSongButton {
+    height: 80px;
+  }
+  #addCommandButton {
+    height: 80px;
+  }
+  #bpmButton {
+    height: 80px;
+  }
+  #saveBtn {
+    height: 80px;
   }
 }
 
@@ -122,7 +148,6 @@ h2 {
     margin-top: 0px;
     flex: 2;
     max-width: 250px;
-    height: 50px;
     background-color: rgb(128, 0, 107);
     color: white;
     font-family: Source Sans Pro,Open Sans,sans-serif;
@@ -137,7 +162,20 @@ h2 {
     margin-left: 16px;
     flex: 3;
     max-width: 250px;
-    height: 50px;
+    background-color: rgb(128, 0, 107);
+    color: white;
+    font-family: Source Sans Pro,Open Sans,sans-serif;
+    font-size: 24px;
+    border-radius: 30px;
+    border: none;
+    -webkit-appearance: none;
+}
+
+#bpmButton {
+    margin-top: 0px;
+    margin-left: 16px;
+    flex: 3;
+    max-width: 250px;
     background-color: rgb(128, 0, 107);
     color: white;
     font-family: Source Sans Pro,Open Sans,sans-serif;
@@ -173,6 +211,10 @@ h2 {
     transform: scale(.9);
 }
 
+#bpmButton:active {
+    transform: scale(.9);
+}
+
 #hideNowPlayingCommandsButton {
     background-color: white;
     padding-right: 16px;
@@ -184,6 +226,21 @@ h2 {
     font-style: bold;
     font-size: 16px;
     display: none;
+}
+
+#saveBtn {
+    margin-left: 16px;
+    padding-right: 16px;
+    margin-top: 0px;
+    flex: 2;
+    max-width: 250px;
+    background-color: rgb(128, 0, 107);
+    color: white;
+    font-family: Source Sans Pro,Open Sans,sans-serif;
+    font-size: 24px;
+    border-radius: 30px;
+    border: none;
+    -webkit-appearance: none;
 }
 
 #colorSelect {
@@ -230,13 +287,26 @@ input[type=checkbox] {
     font-size: 14px;
 }
 
-
-/*
-#commandsContainer {
-    margin-top: -16px;
-    display: block;
+.warning-label {
+    color: red;
+    display: none;
+    margin-top: 16px;
+    margin-bottom: 16px;
 }
 
-#commandsContainer p {
-    margin-bottom: -16px;
-}*/
+#commandsInput {
+    height: 150px;
+}
+
+#commandsInput::placeholder {
+    color: #d3d3d3;
+}
+
+a {
+    color: rgb(27, 137, 240);
+    text-decoration: none;
+}
+
+textarea { 
+    resize: none; 
+}
