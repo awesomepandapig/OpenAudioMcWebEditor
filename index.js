@@ -6,6 +6,7 @@ var hours = 0;
 var minutes = 0;
 var seconds = 0;
 var timestamp = 0;
+var songTimestamp = 0;
 var duration = 0;
 var commandDuration = 0;
 var cueAmt = 0;
@@ -98,6 +99,7 @@ function addSongFromUrl() {
             nowPlayingOutput.style.backgroundColor = "#303030";
             nowPlayingOutput.style.overflowWrap = "break-word";
             var checkbox = document.getElementById("checkBox");
+            document.getElementById("hideNowPlayingCommandsButton").style.display = "block";
             if (checkbox.checked == true) {
                 command = ("tellraw @a {\"text\":\"Now Playing: " + songName + " - " + artistName + "\",\"bold\":true,\"color\":\"" + color + "\"}");
                 addCue();
@@ -112,7 +114,6 @@ function addSongFromUrl() {
         document.getElementById("songNameInput").value = "";
         document.getElementById("artistNameInput").value = "";
         document.getElementById("songUrlInput").value = "";
-        document.getElementById("hideNowPlayingCommandsButton").style.display = "block";
         Spinner.hide(); 
         },false);
     }
@@ -220,28 +221,58 @@ function addBpm() {
             show.showName = document.getElementById("showNameInput").value;
             duration = (Math.floor(au.duration)*1000);
             console.log(duration);
-            setDuration += duration;
-            console.log(setDuration);
+            if (setDuration == 0) { 
+                setDuration += duration; 
+                console.log("set duration: " + setDuration);
+            }
             incrementValue = Math.floor((bpm/60)*20)/4;
             while (timestamp < setDuration) {
                 commands = document.getElementById("commandsInput").value.split(', ');
-                for (i = 0; i < commands.length; i++) { 
-                    command = commands[i];
-                    if (command[0] == "/") {
-                        command = command.substring(1,command.length);
+                if (document.getElementById("rainbowCheckbox").checked == true) {
+                    for (i = 0; i < commands.length; i++) { 
+                        command = commands[i];
+                        if (command[0] == "/") {
+                            command = command.substring(1,command.length);
+                        }
+                        timestamp = Math.floor(timestamp +=50*incrementValue);
+                        addCue();
+                        var commandOutput = document.createElement("p");   
+                        commandOutput.style.color = "white";
+                        commandOutput.style.margin = "16px";
+                        commandOutput.style.marginRight = "16px";
+                        commandOutput.style.marginBottom = "16px";
+                        commandOutput.style.padding = "16px";
+                        commandOutput.style.backgroundColor = "#303030";
+                        commandOutput.style.overflowWrap = "break-word";
+                        commandOutput.innerHTML = ("/oa show add " + showName + " " + Math.floor(timestamp) + "ms" + " command " + command);
+                        document.getElementById("commandsContainer").appendChild(commandOutput);
                     }
-                    timestamp = Math.floor(timestamp +=50*incrementValue);
-                    addCue();
-                    var commandOutput = document.createElement("p");   
-                    commandOutput.style.color = "white";
-                    commandOutput.style.margin = "16px";
-                    commandOutput.style.marginRight = "16px";
-                    commandOutput.style.marginBottom = "16px";
-                    commandOutput.style.padding = "16px";
-                    commandOutput.style.backgroundColor = "#303030";
-                    commandOutput.style.overflowWrap = "break-word";
-                    commandOutput.innerHTML = ("/oa show add " + showName + " " + Math.floor(timestamp) + "ms" + " command " + command);
-                    document.getElementById("commandsContainer").appendChild(commandOutput);
+                } else {
+                    var z = 0;
+                    console.log("set duration is: " + setDuration);
+                    for (j = 0; j < commands.length; j++) { 
+                        command = commands[z];
+                        if (command[0] == "/") {
+                            command = command.substring(1,command.length);
+                        }
+                        timestamp = setDuration - duration;
+                        z++;
+                        while (timestamp < setDuration) { 
+                            console.log("command: " + command);
+                            timestamp = Math.floor(timestamp +=50*incrementValue);
+                            addCue();
+                            var commandOutput = document.createElement("p");   
+                            commandOutput.style.color = "white";
+                            commandOutput.style.margin = "16px";
+                            commandOutput.style.marginRight = "16px";
+                            commandOutput.style.marginBottom = "16px";
+                            commandOutput.style.padding = "16px";
+                            commandOutput.style.backgroundColor = "#303030";
+                            commandOutput.style.overflowWrap = "break-word";
+                            commandOutput.innerHTML = ("/oa show add " + showName + " " + Math.floor(timestamp) + "ms" + " command " + command);
+                            document.getElementById("commandsContainer").appendChild(commandOutput);
+                        }
+                    }
                 }
             }
             document.getElementById("bpmSongUrlInput").value = "";

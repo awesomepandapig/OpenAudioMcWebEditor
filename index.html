@@ -130,7 +130,12 @@
                     <label class="warning-label" id="bpmInvalidWarning">BPM must be at least 50</label>
 
                     <label for="commandsInput">Commands</label><br>
-                    <label class="disclaimerLabel">(Seperate with a comma space)</label>           
+                    <div style="float: right;" class="tooltip">
+                        <input style="float: right;" id="rainbowCheckbox" type="checkbox">
+                        <label style="float: right;" for="">🛈 Rainbow</label>
+                        <span class="tooltiptext">Places each command on a seperate beat</span>
+                    </div>
+                    <label class="disclaimerLabel">(Seperate with a comma space)</label>
                     <textarea class="modal-input" id="commandsInput" type="text" placeholder="command1, command2, command3"></textarea>
                     <label class="warning-label" id="bpmCommandEmptyWarning">You must enter a command</label>
                     <button class="submit-button" id="submitBpm" type="submit" onclick="addBpm();">Add BPM Effect</button>
